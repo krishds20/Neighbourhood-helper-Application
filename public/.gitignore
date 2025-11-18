@@ -1,0 +1,5 @@
+## Ignore OS and editor files in public assets
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
