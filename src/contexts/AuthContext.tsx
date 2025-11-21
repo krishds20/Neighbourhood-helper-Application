@@ -31,6 +31,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const users = JSON.parse(localStorage.getItem("users") || "[]");
       const demoEmail = "user1@gmail.com";
       const demoId = "user1-id";
+      const adminEmail = "admin@admin.com";
+      const adminId = "admin-id";
 
       if (!users.some((u: any) => u.email === demoEmail)) {
         users.push({
@@ -39,6 +41,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           password: "user1",
           name: "user1",
           role: "user",
+        });
+        localStorage.setItem("users", JSON.stringify(users));
+      }
+
+      if (!users.some((u: any) => u.email === adminEmail)) {
+        users.push({
+          id: adminId,
+          email: adminEmail,
+          password: "admin",
+          name: "admin",
+          role: "admin",
         });
         localStorage.setItem("users", JSON.stringify(users));
       }

@@ -18,6 +18,11 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const fillDemo = (e: string, p: string) => {
+    setEmail(e);
+    setPassword(p);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -84,6 +89,30 @@ const Auth = () => {
                 </div>
                 <Button type="submit" className="w-full">Login</Button>
               </form>
+
+              <div className="mt-4 border-t pt-4">
+                <p className="text-sm text-muted-foreground">Demo accounts (click to autofill):</p>
+                <div className="mt-2 grid grid-cols-1 gap-2">
+                  <div className="flex items-center justify-between rounded-md bg-muted p-3">
+                    <div>
+                      <div className="text-sm font-medium">User</div>
+                      <div className="text-xs text-muted-foreground">Email: user1@gmail.com — Password: user1</div>
+                    </div>
+                    <Button size="sm" onClick={() => fillDemo("user1@gmail.com", "user1")}>
+                      Use
+                    </Button>
+                  </div>
+                  <div className="flex items-center justify-between rounded-md bg-muted p-3">
+                    <div>
+                      <div className="text-sm font-medium">Admin</div>
+                      <div className="text-xs text-muted-foreground">Email: admin@admin.com — Password: admin</div>
+                    </div>
+                    <Button size="sm" onClick={() => fillDemo("admin@admin.com", "admin")}>
+                      Use
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </TabsContent>
             <TabsContent value="register">
               <form onSubmit={handleSubmit} className="space-y-4">
