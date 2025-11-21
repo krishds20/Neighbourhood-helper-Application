@@ -25,6 +25,74 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
+
+    // Seed a demo user and some demo help requests if they don't exist yet
+    try {
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+      const demoEmail = "user1@gmail.com";
+      const demoId = "user1-id";
+
+      if (!users.some((u: any) => u.email === demoEmail)) {
+        users.push({
+          id: demoId,
+          email: demoEmail,
+          password: "user1",
+          name: "user1",
+          role: "user",
+        });
+        localStorage.setItem("users", JSON.stringify(users));
+      }
+
+      const helpRequests = JSON.parse(localStorage.getItem("helpRequests") || "[]");
+      if (!helpRequests || helpRequests.length === 0) {
+        const now = new Date().toISOString();
+        const demoRequests = [
+          {
+            id: "req-1",
+            title: "Grocery pickup for elderly neighbour",
+            description: "Need someone to pick up groceries from the nearby store.",
+            category: "Shopping",
+            status: "active",
+            requesterId: demoId,
+            requesterName: "user1",
+            createdAt: now,
+          },
+          {
+            id: "req-2",
+            title: "Help setting up a router",
+            description: "Router needs basic configuration and Wi-Fi setup.",
+            category: "Technology Help",
+            status: "active",
+            requesterId: demoId,
+            requesterName: "user1",
+            createdAt: now,
+          },
+          {
+            id: "req-3",
+            title: "Walk my dog for 30 minutes",
+            description: "Looking for someone to walk my dog in the evenings.",
+            category: "Pet Care",
+            status: "active",
+            requesterId: demoId,
+            requesterName: "user1",
+            createdAt: now,
+          },
+          {
+            id: "req-4",
+            title: "Assist moving a small sofa",
+            description: "Need two people to help move a small sofa across the hallway.",
+            category: "Moving Help",
+            status: "active",
+            requesterId: demoId,
+            requesterName: "user1",
+            createdAt: now,
+          },
+        ];
+        localStorage.setItem("helpRequests", JSON.stringify(demoRequests));
+      }
+    } catch (e) {
+      // ignore storage errors in environments where localStorage isn't available
+    }
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
